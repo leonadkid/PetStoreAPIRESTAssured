@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id "checkstyle"
+    id "jacoco"
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    //testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    // https://mvnrepository.com/artifact/io.rest-assured/rest-assured
+    testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '5.3.0'
+    testImplementation group: 'io.rest-assured', name: 'json-path', version: '5.3.0'
+    implementation group: 'org.json', name: 'json', version: '20230227'
+    testImplementation group: 'org.testng', name: 'testng', version: '7.7.1'
+    runtimeOnly group: 'com.github.scribejava', name: 'scribejava-apis', version: '8.3.3'
+    implementation group: 'com.github.fge', name: 'json-schema-validator', version: '2.2.6'
+    implementation group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'
+    implementation group: 'com.aventstack', name: 'extentreports', version: '5.0.9'
+    implementation group: 'org.apache.poi', name: 'poi', version: '5.2.3'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.2.3'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+checkstyle {
+    configFile = file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+    toolVersion = '8.1'
+}
+checkstyleMain {
+    configFile = file("${project.rootDir}/config/checkstyle/default.xml")
+    ignoreFailures = true
+}
+checkstyleTest {
+    configFile = file("${project.rootDir}/config/checkstyle/default.xml")
+    ignoreFailures = true
+}
+task checkstyle(type: Checkstyle) {
+    classpath = sourceSets.main.output + sourceSets.test.output
+    source = sourceSets.main.allJava + sourceSets.test.allJava
+}
