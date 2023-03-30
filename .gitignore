@@ -1,6 +1,7 @@
 # Default ignored files
 /build/*
 /.idea/*
-/gradle/*
-.gradle/*
+/.gradle/*
+/.run/*
 .DS_Store
+/reports/
